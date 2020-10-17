@@ -83,36 +83,15 @@ const menu = [
 ];
 
 const sectionCenter = document.querySelector(".section-center");
-const filterBtns = document.querySelectorAll(".filter-btn")
+const btnContainer = document.querySelector(".btn-container");
 
 //Load Items
 window.addEventListener("DOMContentLoaded", function(){
+    displayMenuButtons(menu);
     displayMenuItems(menu);
-
+    //console.log(uniqueCategory(menu));
 
 });
-
-//Filter Button
-filterBtns.forEach(function(btn){
-    btn.addEventListener('click', function(e){
-        //console.log(e.currentTarget.dataset.id);
-        const category = e.currentTarget.dataset.id;
-        //console.log(e.currentTarget.dataset.id);
-        const menuCategory = menu.filter(function(menuItems){
-            if(menuItems.category === category){
-                return menuItems;
-            }
-        });
-
-        if(category === 'all'){
-            displayMenuItems(menu);
-        }
-        else{
-            displayMenuItems(menuCategory);
-        }
-    });
-});
-
 // Populate Items
 function displayMenuItems(menuItems){
     let displayMenu = menuItems.map(function(item){
@@ -136,11 +115,59 @@ function displayMenuItems(menuItems){
 // iterate over categories return buttons
 // make sure to select buttons when they are available
 
-//Populate Filter button
-function displayFilterButton(menuItems){
-        //return `<button type="button" class="filter-btn" data-id="all">All</button>
-        //        <button type="button" class="filter-btn" data-id=${menu}>${}</button>
-        //    `
+// Find unique category
+function uniqueCategory(menuItems){
+    const categories = menuItems.reduce(function(values, item){
+        if(!values.includes(item.category)){
+            values.push(item.category);
+        }
+        return values;
+    },['all'])
+    //console.log(categories);
+    return categories;
 };
+//Populate Filter button
+function displayMenuButtons(menuItems){
+    const unique  = uniqueCategory(menuItems);
+    //console.log(unique);
+    //console.log(uniqueCategory(menuItems));
+    const categoryBtns = unique.map(function(category){
+        return  `<button type="button" class="filter-btn" data-id=${category}>${category}</button>`
+    }).join("");
+    //console.log(displayButton);
+    btnContainer.innerHTML = categoryBtns;
+
+    const filterBtns = btnContainer.querySelectorAll(".filter-btn");
+    //const filterBtns = document.querySelectorAll(".filter-btn");
+
+    //console.log(filterBtns);
+
+    //Filter Button
+    filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(e){
+            //console.log(e.currentTarget.dataset.id);
+            const category = e.currentTarget.dataset.id;
+            //console.log(e.currentTarget.dataset.id);
+            const menuCategory = menu.filter(function(menuItems){
+                if(menuItems.category === category){
+                    return menuItems;
+                }
+            });
+
+            if(category === 'all'){
+                displayMenuItems(menu);
+            }
+            else{
+                displayMenuItems(menuCategory);
+            }
+        });
+    });
+};
+
+
+
+
+
+
 
 
