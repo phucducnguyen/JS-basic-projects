@@ -72,15 +72,50 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "bison steak",
+    category: "dinner",
+    price: 22.99,
+    img: "./images/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  }
 ];
 
 const sectionCenter = document.querySelector(".section-center");
+const filterBtns = document.querySelectorAll(".filter-btn")
 
+//Load Items
 window.addEventListener("DOMContentLoaded", function(){
-    //console.log("shake and bake");
-    let displayMenu = menu.map(function(item){
-        //console.log(item);
-        //return item;
+    displayMenuItems(menu);
+
+
+});
+
+//Filter Button
+filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(e){
+        //console.log(e.currentTarget.dataset.id);
+        const category = e.currentTarget.dataset.id;
+        //console.log(e.currentTarget.dataset.id);
+        const menuCategory = menu.filter(function(menuItems){
+            if(menuItems.category === category){
+                return menuItems;
+            }
+        });
+
+        if(category === 'all'){
+            displayMenuItems(menu);
+        }
+        else{
+            displayMenuItems(menuCategory);
+        }
+    });
+});
+
+// Populate Items
+function displayMenuItems(menuItems){
+    let displayMenu = menuItems.map(function(item){
         return `<article class="menu-item">
                 <img src=${item.img} alt=${item.title} class="photo">
                 <div class="item-info">
@@ -93,6 +128,19 @@ window.addEventListener("DOMContentLoaded", function(){
             </article>`;
     });
     displayMenu = displayMenu.join("");
-    console.log(displayMenu);
+    //console.log(displayMenu);
     sectionCenter.innerHTML = displayMenu;
-});
+};
+
+// Get unique categories
+// iterate over categories return buttons
+// make sure to select buttons when they are available
+
+//Populate Filter button
+function displayFilterButton(menuItems){
+        //return `<button type="button" class="filter-btn" data-id="all">All</button>
+        //        <button type="button" class="filter-btn" data-id=${menu}>${}</button>
+        //    `
+};
+
+
