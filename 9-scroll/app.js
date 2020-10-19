@@ -7,25 +7,25 @@
 const date = document.getElementById('date');
 date.innerHTML = new Date().getFullYear();
 // ********** close links ************
-const navToggle = document.querySelector('.nav-toggle');
-const linksContainer = document.querySelector('.links-container');
-const navToggle = document.querySelector('.links');
+const navToggle = document.querySelector(".nav-toggle");
+const linksContainer = document.querySelector(".links-container");
+const links = document.querySelector(".links");
 
 navToggle.addEventListener('click', function(){
     //linksContainer.classList.toggle("show-links");           for non-dynamic data
-    const containerHeight = linksContainer.getBoundingClientRect();
+    const containerHeight = linksContainer.getBoundingClientRect().height;
     //console.log(containerHeight);
-    const linksHeight = links.getBoundingClientRect().height;
+    const linkHeight = links.getBoundingClientRect().height;
     //console.log(linkHeight);
 
 
     if (containerHeight ===0){
-        linksContainer.style.height = `${linksHeight}px`
+        linksContainer.style.height = `${linkHeight}px`
     }
     else{
         linksContainer.style.height = 0;
     }
-});
+}); 
 // ********** fixed navbar ************
 
 // ********** smooth scroll ************
